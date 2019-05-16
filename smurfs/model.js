@@ -24,7 +24,7 @@ function remove(id) {
 }
 
 function update(id, changes) {
-  return db('smurfs').where({id}).update(changes, 'id').then(([id]) => get(id));
+  return db('smurfs').where({id}).update(changes, 'id').then(updated  => updated ? get(id) : null);
 }
 
 

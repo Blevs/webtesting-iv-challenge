@@ -41,4 +41,31 @@ describe('smurfs model', () => {
       expect(await Smurfs.get(smurf.id)).toEqual(smurf);
     });
   });
+
+  describe('remove', () => {
+    it('remove smurf', async () => {
+      const smurf = await Smurfs.insert({ name: 'Henry', weight: 52 });
+      await Smurfs.insert({ name: 'Jennie', weight: 35 });
+      await Smurfs.remove(smurf.id);
+      expect(await db('smurfs')).toHaveLength(1);
+    });
+  });
+
+  describe('update', () => {
+    it('update smurf', async () => {
+      const smurf = await Smurfs.insert({ name: 'Henry', weight: 19 });
+      await Smurfs.insert({ name: 'Caroline', weight: 20 });
+      await Smurfs.update(smurf.id, {name: 'NotHenry'});
+      const updatedSmurf = await(Smurfs.get(smurf.id));
+      expect(updatedSmurf.name).toEqual('NotHenry');
+      expect(updatedSmurf.weight).toEqual(19);
+    });
+    it('update returns smurf', async () => {
+      const smurf = await Smurfs.insert({ name: 'Henry', weight: 19 });
+      await Smurfs.insert({ name: 'Caroline', weight: 20 });
+      const updatedSmurf = await Smurfs.update(smurf.id, {name: 'NotHenry'});
+      expect(updatedSmurf.name).toEqual('NotHenry');
+      expect(updatedSmurf.weight).toEqual(19);
+    });
+  });
 });
