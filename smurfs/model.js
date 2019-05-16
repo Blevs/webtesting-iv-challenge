@@ -9,7 +9,7 @@ module.exports = {
 
 function get(id) {
   if (id) {
-    return db('smurfs').where({id});
+    return db('smurfs').where({id}).first();
   } else {
     return db('smurfs');
   }

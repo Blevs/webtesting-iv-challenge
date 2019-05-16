@@ -5,6 +5,7 @@ describe('smurfs model', () => {
   afterEach(async () => {
     await db('smurfs').truncate();
   });
+
   describe('insert', () => {
     it('insert a smurf', async () => {
       await Smurfs.insert({ name: 'Henry', weight: 20 });
@@ -25,6 +26,19 @@ describe('smurfs model', () => {
     });
     it('enforce required columns', async () => {
       await expect(Smurfs.insert({})).rejects.toThrow(/NOT NULL/i);
+    });
+  });
+
+  describe('get', () => {
+    it('get entire database', async () => {
+      await Smurfs.insert({ name: 'Henry', weight: 20 });
+      await Smurfs.insert({ name: 'James', weight: 30 });
+      expect(await Smurfs.get()).toEqual(await db('smurfs'));
+    });
+    it('get smurf by id', async () => {
+      const smurf = await Smurfs.insert({ name: 'Henry', weight: 20 });
+      await Smurfs.insert({ name: 'James', weight: 30 });
+      expect(await Smurfs.get(smurf.id)).toEqual(smurf);
     });
   });
 });
