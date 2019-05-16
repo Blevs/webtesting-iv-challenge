@@ -28,4 +28,15 @@ describe('smurfs routes', () => {
       expect(res.status).toBe(400);
     });
   });
+  describe('delete', () => {
+    it('delete a smurf', async () => {
+      const {body} = await request(server).post('/api/smurfs/').send({name: 'Henry', weight: 200});
+      const res = await request(server).delete('/api/smurfs/' + body.id);
+      expect(res.status).toBe(204);
+    });
+    it('error on fake smurf', async () => {
+      const res = await request(server).delete('/api/smurfs/' + 214);
+      expect(res.status).toBe(404);
+    });
+  });
 });
