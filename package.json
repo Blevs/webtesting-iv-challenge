@@ -4,6 +4,7 @@
   "description": "Server Testing Project",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "cross-env DB_ENV=testing jest --watch --verbose"
   },
   "jest": {
