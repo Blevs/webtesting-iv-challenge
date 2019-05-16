@@ -1,7 +1,10 @@
 const express = require('express');
+const smurfs = require('./smurfs/routes.js');
 
 const server = express();
 
 server.use(express.json());
 
-server.listen(4000, () =>  console.log('server running on port 4000'));
+server.use('/api/smurfs', smurfs);
+
+module.exports = server;
